@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>converter</title>
+    <style>
+        body {
+            background-color: rgb(222, 255, 221);
+        }
+
+        .total {
+            width: 400px;
+            margin: auto;
+        }
+
+        .container {
+            border: 1px solid black;
+            width: 250px;
+            margin: auto;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        #tb1 {
+            background-color: rgb(207, 233, 255);
+            width: 245px;
+            height: 110px;
+            margin: auto;
+            display: inherit;
+        }
+
+        #tb2 {
+            background-color: rgb(207, 233, 255);
+            width: 100px;
+            margin: auto;
+            border-radius: 5px;
+            display: inherit;
+            outline: none;
+        }
+
+        button {
+            background-color: #54afff;
+            width: 100px;
+            margin: auto;
+            display: inherit;
+            outline: none;
+            border-radius: 10px;
+        }
+
+        #cont {
+            display: none;
+            background-color: aliceblue;
+            width: 340px;
+            height: 200px;
+            padding: 10px;
+            margin: 20px auto;
+            outline: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="total">
+        <div class="container">
+            <textarea name="textBox" id="tb1"></textarea><br>
+            <input type="text" name="textBox2" id="tb2">
+            <hr>
+            <button onclick="submit()">submit</button>
+        </div>
+
+        <div class="cont" id="cont"></div>
+    </div>
+
+    <script>
+        function replaceCharacters(str, n) {
+            const baseString = "C C# D D# E F F# G G# A A# B";
+            const notes = baseString.split(' '); // Split the baseString into an array
+
+            // Function to find the next note in the sequence
+            function getNextNote(note, step) {
+                const index = notes.indexOf(note);
+                return notes[(index + step) % notes.length];
+            }
+
+            // Replace characters in the input string
+            const replacedString = str.replace(/[A-G]#?/g, (match) => {
+                return getNextNote(match, n);
+            });
+
+            return replacedString;
+        }
+
+        let textBox = document.getElementById('tb1')
+        let increment = document.getElementById('tb2')
+        let Box = document.getElementById('cont')
+
+        function submit() {
+            const result = replaceCharacters(textBox.value, Number(increment.value));
+            // console.log(result); // Output: "DFC"
+            if (Box.style.display != 'block') {
+                Box.style.display = 'block'
+            }
+            // Box.innerHTML = result
+
+            // Create a <pre> element to display the result as preformatted text
+            const preElement = document.createElement('pre');
+            preElement.textContent = result;
+
+            // Replace the content of 'cont' with the <pre> element
+            Box.innerHTML = '';
+            Box.appendChild(preElement);
+        }
+    </script>
+</body>
+
+</html>
